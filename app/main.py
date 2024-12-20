@@ -8,20 +8,20 @@ app = FastAPI()
 # Добавляем middleware для CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Разрешаем все источники
+    allow_origins=["http://127.0.0.1:8000"],  # Разрешаем все источники
     allow_credentials=True,
     allow_methods=["*"],  # Разрешаем все методы
     allow_headers=["*"],  # Разрешаем все заголовки
 )
 
-app.mount('/static', StaticFiles(directory='app/static'), name='static')
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 
 @app.get("/")
 def home_page():
     return {
         "message": "Добро пожаловать! Пусть эта заготовка станет удобным инструментом для вашей работы и "
-                   "приносит вам пользу!"
+        "приносит вам пользу!"
     }
 
 

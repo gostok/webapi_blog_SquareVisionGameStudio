@@ -75,7 +75,17 @@ class DatabaseSessionManager:
                 async with self.session_maker() as session:
                     try:
                         if isolation_level:
-                            await session.execute(text(f"SET TRANSACTION ISOLATION LEVEL {isolation_level}"))
+                            isolation_level = (
+                                isolation_level
+                                if isolation_level
+                                in [
+                                    "SERIALIZABLE",
+                                    "REPEATABLE READ",
+                                    "READ COMMITTED",
+                                    "READ UNCOMMITTED",
+                                ]
+                                else "READ COMMITTED"
+                            )
 
                         result = await method(*args, session=session, **kwargs)
 
